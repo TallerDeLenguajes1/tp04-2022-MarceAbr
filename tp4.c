@@ -15,10 +15,12 @@ void mostrarTareas(Tarea ** tareas, int num);
 int realizadas(Tarea **tareasRealizadas, Tarea **tareas, int numeroTareas);
 void listaTareasRealizadas(Tarea **tereasRealizada, int num);
 void listaTareasPendientes(Tarea **tareas, int num);
+void buscarID(Tarea **tareas, int num, int id);
 
 int main(){
     srand(time(NULL));
     int numeroTareas;
+    int id;
     Tarea **cantidadTarea;
     Tarea **tareasRealizadas;
 
@@ -28,13 +30,20 @@ int main(){
     cantidadTarea = (Tarea**)malloc(sizeof(Tarea*) * numeroTareas);
     tareasRealizadas = (Tarea**)malloc(sizeof(Tarea*) * numeroTareas);
 
+    cargarTareas(cantidadTarea, numeroTareas);
+
+    //------------------ busqueda por id -----------------
+    printf("Indique el ID que desea buscar: ");
+    scanf("%d", &id);
+    buscarID(cantidadTarea, numeroTareas, id);
+    //------------------ fin busqueda por id -----------------
+
     for (int i = 0; i < numeroTareas; i++)
     {
         tareasRealizadas[i] = NULL;
     }
-
-    cargarTareas(cantidadTarea, numeroTareas);
     // mostrarTareas(cantidadTarea, numeroTareas);
+    
     int cantidadRealizadas = realizadas(tareasRealizadas, cantidadTarea, numeroTareas);
     listaTareasRealizadas(tareasRealizadas, cantidadRealizadas);
     listaTareasPendientes(cantidadTarea, numeroTareas);
@@ -66,7 +75,7 @@ void cargarTareas(Tarea **tareas, int num)
 
 void mostrarTareas(Tarea ** tareas, int num)
 {	
-    printf("========== Tarea numero %d ==========\n");
+    printf("========== Tarea numero %d ==========\n",num+1);
     printf("ID = %d\n", tareas[num]->tareaID);
     printf("Descripcion: ");
     puts(tareas[num]->descripcion);
@@ -125,4 +134,18 @@ void listaTareasPendientes(Tarea **tareas, int num)
             mostrarTareas(tareas, i);
         }
     } 
+}
+
+void buscarID(Tarea **tareas, int num, int id)
+{
+    printf("\n\n---------- TAREAS BUSCADA POR ID ----------\n");
+      
+    for (int i = 0; i < num; i++)
+    {
+        if (tareas[i]->tareaID == id)
+        {
+            mostrarTareas(tareas,i);
+        }      
+    }  
+    printf("\n"); 
 }
