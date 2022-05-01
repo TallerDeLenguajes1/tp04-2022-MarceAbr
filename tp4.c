@@ -15,10 +15,12 @@ void mostrarTareas(Tarea ** tareas, int num);
 int realizadas(Tarea **tareasRealizadas, Tarea **tareas, int numeroTareas);
 void listaTareasRealizadas(Tarea **tereasRealizada, int num);
 void listaTareasPendientes(Tarea **tareas, int num);
+void buscarPorPalabra(Tarea **tareas, int num, char * clave);
 
 int main(){
     srand(time(NULL));
     int numeroTareas;
+    char * clave = (char*)malloc(sizeof(char)*10);
     Tarea **cantidadTarea;
     Tarea **tareasRealizadas;
 
@@ -28,12 +30,20 @@ int main(){
     cantidadTarea = (Tarea**)malloc(sizeof(Tarea*) * numeroTareas);
     tareasRealizadas = (Tarea**)malloc(sizeof(Tarea*) * numeroTareas);
 
+    cargarTareas(cantidadTarea, numeroTareas);
+
+    //---------- Busqueda por palabra ------------
+    printf("Indique la palabra clave para buscar una tarea: ");
+    gets(clave);
+    buscarPorPalabra(cantidadTarea, numeroTareas, clave);
+    free(clave);
+    //---------- fin busqueda por palabra ------------
+
     for (int i = 0; i < numeroTareas; i++)
     {
         tareasRealizadas[i] = NULL;
     }
 
-    cargarTareas(cantidadTarea, numeroTareas);
     // mostrarTareas(cantidadTarea, numeroTareas);
     int cantidadRealizadas = realizadas(tareasRealizadas, cantidadTarea, numeroTareas);
     listaTareasRealizadas(tareasRealizadas, cantidadRealizadas);
@@ -121,6 +131,20 @@ void listaTareasPendientes(Tarea **tareas, int num)
     for (int i = 0; i < num; i++)
     {   
         if (tareas[i] != NULL)
+        {
+            mostrarTareas(tareas, i);
+        }
+    } 
+}
+
+void buscarPorPalabra(Tarea **tareas, int num, char * clave)
+{
+    
+    printf("---------- TAREAS BUSCADA POR PALABRA ----------\n");
+    for (int i = 0; i < num; i++)
+    {   
+        int valor = strcmp(tareas[i]->descripcion, clave);
+        if (valor);
         {
             mostrarTareas(tareas, i);
         }
