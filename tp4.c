@@ -15,7 +15,8 @@ void mostrarTareas(Tarea ** tareas, int num);
 int realizadas(Tarea **tareasRealizadas, Tarea **tareas, int numeroTareas);
 void listaTareasRealizadas(Tarea **tereasRealizada, int num);
 void listaTareasPendientes(Tarea **tareas, int num);
-void buscarPorPalabra(Tarea **tareas, int num, char * clave);
+void BuscarTarea(Tarea **tareas, int num, char * clave);
+void LiberarMemoria(Tarea ** tareas, int cantidad);
 
 int main(){
     srand(time(NULL));
@@ -35,7 +36,7 @@ int main(){
     //---------- Busqueda por palabra ------------
     printf("Indique la palabra clave para buscar una tarea: ");
     gets(clave);
-    buscarPorPalabra(cantidadTarea, numeroTareas, clave);
+    BuscarTarea(cantidadTarea, numeroTareas, clave);
     free(clave);
     //---------- fin busqueda por palabra ------------
 
@@ -48,6 +49,9 @@ int main(){
     int cantidadRealizadas = realizadas(tareasRealizadas, cantidadTarea, numeroTareas);
     listaTareasRealizadas(tareasRealizadas, cantidadRealizadas);
     listaTareasPendientes(cantidadTarea, numeroTareas);
+    int totalPendientes = numeroTareas - cantidadRealizadas; //Para saber cuntas tareas me quedan en las pendientes
+    LiberarMemoria(tareasRealizadas, cantidadTarea);
+    LiberarMemoria(tareasRealizadas, cantidadTarea);
 
     return 0;
 }
@@ -137,16 +141,28 @@ void listaTareasPendientes(Tarea **tareas, int num)
     } 
 }
 
-void buscarPorPalabra(Tarea **tareas, int num, char * clave)
+void BuscarTarea(Tarea **tareas, int num, char * clave)
 {
     
     printf("---------- TAREAS BUSCADA POR PALABRA ----------\n");
     for (int i = 0; i < num; i++)
     {   
-        int valor = strcmp(tareas[i]->descripcion, clave);
-        if (valor);
+        if (strcmp(tareas[i]->descripcion, clave));
         {
             mostrarTareas(tareas, i);
         }
     } 
+}
+
+void LiberarMemoria(Tarea ** tareas, int cantidad)
+{
+    for (int i = 0; i < cantidad; i++)
+    {
+        if (tareas[i])
+        {
+            free(tareas[i]->descripcion);
+        }
+        free(tareas[i]);
+    }
+    free(tareas);
 }
