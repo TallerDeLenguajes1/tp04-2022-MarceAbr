@@ -62,8 +62,8 @@ int main(){
     listaTareasRealizadas(tareasRealizadas, cantidadRealizadas);
     listaTareasPendientes(cantidadTarea, numeroTareas);
     int totalPendientes = numeroTareas - cantidadRealizadas; //Para saber cuntas tareas me quedan en las pendientes
-    LiberarMemoria(tareasRealizadas, cantidadTarea);
-    LiberarMemoria(tareasRealizadas, cantidadTarea);
+    LiberarMemoria(tareasRealizadas, numeroTareas);
+    LiberarMemoria(tareasRealizadas, numeroTareas);
 
     return 0;
 }
