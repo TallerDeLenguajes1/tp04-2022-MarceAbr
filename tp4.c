@@ -17,11 +17,15 @@ void listaTareasRealizadas(Tarea **tereasRealizada, int num);
 void listaTareasPendientes(Tarea **tareas, int num);
 void BuscarTarea(Tarea **tareas, int num, char * clave);
 void LiberarMemoria(Tarea ** tareas, int cantidad);
+void buscarID(Tarea **tareas, int num, int id);
+
 
 int main(){
     srand(time(NULL));
     int numeroTareas;
     char * clave = (char*)malloc(sizeof(char)*10);
+    int id; //Para buscar por id
+
     Tarea **cantidadTarea;
     Tarea **tareasRealizadas;
 
@@ -33,6 +37,7 @@ int main(){
 
     cargarTareas(cantidadTarea, numeroTareas);
 
+
     //---------- Busqueda por palabra ------------
     printf("Indique la palabra clave para buscar una tarea: ");
     gets(clave);
@@ -40,12 +45,19 @@ int main(){
     free(clave);
     //---------- fin busqueda por palabra ------------
 
+    //------------------ busqueda por id -----------------
+    printf("Indique el ID que desea buscar: ");
+    scanf("%d", &id);
+    buscarID(cantidadTarea, numeroTareas, id);
+    //------------------ fin busqueda por id -----------------
+
+
     for (int i = 0; i < numeroTareas; i++)
     {
         tareasRealizadas[i] = NULL;
     }
-
     // mostrarTareas(cantidadTarea, numeroTareas);
+    
     int cantidadRealizadas = realizadas(tareasRealizadas, cantidadTarea, numeroTareas);
     listaTareasRealizadas(tareasRealizadas, cantidadRealizadas);
     listaTareasPendientes(cantidadTarea, numeroTareas);
@@ -80,7 +92,7 @@ void cargarTareas(Tarea **tareas, int num)
 
 void mostrarTareas(Tarea ** tareas, int num)
 {	
-    printf("========== Tarea numero %d ==========\n");
+    printf("========== Tarea numero %d ==========\n",num+1);
     printf("ID = %d\n", tareas[num]->tareaID);
     printf("Descripcion: ");
     puts(tareas[num]->descripcion);
@@ -165,4 +177,18 @@ void LiberarMemoria(Tarea ** tareas, int cantidad)
         free(tareas[i]);
     }
     free(tareas);
+}
+
+void buscarID(Tarea **tareas, int num, int id)
+{
+    printf("\n\n---------- TAREAS BUSCADA POR ID ----------\n");
+      
+    for (int i = 0; i < num; i++)
+    {
+        if (tareas[i]->tareaID == id)
+        {
+            mostrarTareas(tareas,i);
+        }      
+    }  
+    printf("\n"); 
 }
